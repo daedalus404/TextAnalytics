@@ -57,12 +57,14 @@ NOTE: After splitting by date, there are entries without all the fields filled o
 
 
 --------------------------------------
-Creating the SQL database:
+SQL database:
 According to the documentation for sqlite3, I need to connect to a db file, then execute sql commands as normal. Followed by a commit and close statement.
 
 Made a quick test script to get familiar with sqlite3 in python. Works how expected. 
 
-Might need to delete old normanDB.db when program starts, should look at project description to decide.
+Might need to delete old normanDB.db when program starts, should look at project description to decide. Have decided to just reset the table instead of risking OS deletion error.
+
+There is nothing special in the functions for the sql methods. They are just calling very standard sql queries and returning it to the python environment.
 
 ---------------------------------------
 

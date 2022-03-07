@@ -6,7 +6,7 @@ import os
 import re
 
 def main(url):
-    print("Step 1: pass url string")
+    print("Step 1: Pass url string")
     print(url)
     
     print("Step 2: Create temp directory")
@@ -21,10 +21,18 @@ def main(url):
     print("Step 3: Download PDF")
     pullReportPdf(url)
     
-    print("Step 4: convert pdf to strings")
+    print("Step 4: Convert pdf to strings")
     fname = re.findall(r'[^/]*.pdf', url)[-1]
     reports = extractReportData(fname)
     
+    print("Step 5: Create database")
+    createDB()
+    
+    print("Step 6: Enter incidents")
+    addEntries(reports)
+    
+    print("Step 7: Report incidents")
+    status()
     
     print("\n\n")
 
@@ -85,11 +93,69 @@ def extractReportData(pdfFilename: str):
     
 
 def createDB():
-    print()
+    try:
+        newDb = open("normanDB.db", "x")
+        newDb.close()
+        print("Database file created")
+    except FileExistsError:
+        print("Database already exists... resetting database")
+    except:
+        print("Database file creation error - not FileExistsError")
+        
+    con = sqlite3.connect('normanDB.db')
+    cur = con.cursor()
+    
+    #Reset Database
+    cur.execute('''DROP TABLE incidents''')
+    
+    #Create Table
+    cur.execute('''CREATE TABLE incidents (
+                    incident_time TEXT,
+                    incident_number TEXT,
+                    incident_location TEXT,
+                    nature TEXT,
+                    incident_ori TEXT
+                    );''')
+                    
+    con.commit()
+    con.close()
+    
+    print("Database Created")
+
     
 def addEntry(entry):
-    print()
+    con = sqlite3.connect('normanDB.db')
+    cur = con.cursor()
 
+    cur.execute('''INSERT INTO incidents VALUES (?,?,?,?,?)''', entry)
+
+    con.commit()
+    con.close()
+    
+def addEntries(entries):
+    con = sqlite3.connect('normanDB.db')
+    cur = con.cursor()
+
+    cur.executemany('''INSERT INTO incidents VALUES (?,?,?,?,?)''', entries)
+
+    con.commit()
+    con.close()
+    
+def status():
+    con = sqlite3.connect('normanDB.db')
+    cur = con.cursor()
+
+    cur.execute('''SELECT nature, COUNT (nature) as "Number of Incidents" FROM incidents GROUP BY nature''')
+    natureCount = cur.fetchall()
+    natureCount = sorted(natureCount, key=lambda x:x[1], reverse = True)
+    
+    for nature in natureCount:
+        print(nature[0] + " | " + str(nature[1]))
+    
+    con.commit()
+    con.close()
+
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', type=str, required=True, help="URL of Incident PDF")
