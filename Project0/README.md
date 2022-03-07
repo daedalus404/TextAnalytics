@@ -49,6 +49,13 @@ Need to convert pdf to plain text/strings in order to extact the data. You cant 
 
 After creating a quick script to see how PyPDF2 works, its even better than I hoped. The library returns the text in pdf object stream order and each line is 5 seperate fields. So when it returns the text, it returns each pdf object on its own line. So every 5 lines of the output is one line of input, and no seperation functions are needed to get the fields. The assignment mentions that there are "some cells that have information on multiple lines", but I have not seen an example of this so far.
 
+NOTE: The pdf objects for the title are not at the top of the report when converted to text. They will have to be removed manually. Specifically the "NORMAN POLICE DEPARTMENT" and "Daily Incident Summary (Public)".
+
+NOTE: There are entries that are missing information, and these are not represented as blank fields in the pdf. So I need to figure out how to not screw up the rest of the parsing when that happens. Think it will work if I essentially split it by date and then everything between those two just gets put in one entry.
+
+NOTE: After splitting by date, there are entries without all the fields filled out. These fields are always at least including the nature. As the point of the program is to analyze the nature of the incidents, we can just delete these from the entry list.
+
+
 --------------------------------------
 Creating the SQL database:
 According to the documentation for sqlite3, I need to connect to a db file, then execute sql commands as normal. Followed by a commit and close statement.

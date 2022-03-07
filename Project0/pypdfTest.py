@@ -24,5 +24,5 @@ text=pageobj.extractText()
 #go to the file location copy the path by right clicking on the file
 #click properties and copy the location path and paste it here.
 #put "\\your_txtfilename"
-file1=open(r"C:\Users\Zack\OneDrive - University of Oklahoma\Documents\OU_Spring_2022\Text Analytics\TextAnalytics_Git\Project1\testOutput.txt","a")
+file1=open(r"C:\Users\Zack\OneDrive - University of Oklahoma\Documents\OU_Spring_2022\Text Analytics\TextAnalytics_Git\Project0\testOutput.txt","a")
 file1.writelines(text)
