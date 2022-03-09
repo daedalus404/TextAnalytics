@@ -2,3 +2,6 @@ w3 Schools tutorial | https://www.w3schools.com/python/python_file_write.asp | s
 askpython example | https://www.askpython.com/python/examples/convert-pdf-to-txt | syntax for pypdf2 test script
 type expectation example | https://stackoverflow.com/questions/2489669/how-do-python-functions-handle-the-types-of-parameters-that-you-pass-in | syntax for type expectation in python
 stackoverflow list comprehension | https://stackoverflow.com/questions/5850986/joining-pairs-of-elements-of-a-list | Reminder of how to do list comprehension like this
+Regex tester | https://regexr.com/ | Regex pattern testing site w/ cheat sheet
+
+Various official python documentation
